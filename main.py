@@ -1,15 +1,16 @@
 import sys
 import sqlite3
-from PyQt5 import uic
+from addEditCoffeeForm import Ui_Dialog
+from ui import Ui_MainWindow
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QDialog
 
-name = "coffee.sqlite"
+name = "data/coffee.sqlite"
 
 
-class Dialog(QDialog):
+class Dialog(QDialog, Ui_Dialog):
     def __init__(self, dat=None):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         if dat is not None:
             self.lineEdit.setText(str(dat[1]))
             self.lineEdit_2.setText(str(dat[2]))
@@ -22,11 +23,11 @@ class Dialog(QDialog):
         return self.lineEdit, self.lineEdit_2, self.lineEdit_3, self.lineEdit_4, self.lineEdit_5, self.lineEdit_6
 
 
-class My(QMainWindow):
+class My(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
+        self.setupUi(self)
         self.genres_x = None
-        uic.loadUi('main.ui', self)
         self.conn = sqlite3.connect(name)
         self.cur = self.conn.cursor()
         self.funct()
